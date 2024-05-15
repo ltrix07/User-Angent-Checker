@@ -12,7 +12,7 @@ user_agents_file = './user_agents.csv'
 
 proxies = [
         {
-            'ip': '166.88.55.47',
+            'ip': '216.185.47.51',
             'port': 50100,
             'username': 'skotarenko13802NDV',
             'password': 'mrmcIFWs2S'
@@ -88,23 +88,23 @@ async def aiohttp_get(cookies, url, user_agents, proxies, count):
         async with session.get(url, cookies=cookies, proxy=proxy['url'], proxy_auth=proxy['auth'], headers=headers) as response:
             page = await response.text()
 
-            soup = BeautifulSoup(page, 'lxml')
-            price = soup.find('div', class_='x-price-primary')
+            # soup = BeautifulSoup(page, 'lxml')
+            # price = soup.find('div', class_='x-price-primary')
+            #
+            # if price:
+            #     print(price.text)
+            # else:
+            #     if 'We looked everywhere.' not in page:
+            #         print(f'No price in {url}')
+            #
+            #         with open(f'./responses/{time.time()}.html', 'w') as file:
+            #             file.write(page)
 
-            if price:
-                print(price.text)
+            is_latin_check = await not_latin(page)
+            if is_latin_check:
+                print(f'{count}. NO LATIN')
             else:
-                if 'We looked everywhere.' not in page:
-                    print(f'No price in {url}')
-
-                    with open(f'./responses/{time.time()}.html', 'w') as file:
-                        file.write(page)
-
-        # is_latin_check = await not_latin(page)
-        # if is_latin_check:
-        #     print(f'{count}. NO LATIN')
-        # else:
-        #     print(f'{count}. OK')
+                print(f'{count}. OK')
 
 
 
